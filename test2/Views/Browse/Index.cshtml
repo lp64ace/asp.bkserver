@@ -18,16 +18,23 @@
 		background-color: aliceblue
 	}
 
+	.item-img {
+		height: 20px;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
 	.item-type {
 		text-align: left;
-		width: 10%;
+		width: 5%;
 		margin: 2px;
 		padding: 2px;
 	}
 
 	.item-name {
 		text-align: left;
-		width: 50%;
+		width: 55%;
 		margin: 2px;
 		padding: 2px;
 	}
@@ -74,20 +81,23 @@
 		DownloadableModel[] files = (DownloadableModel[])ViewData["Files"];
 		for (int i = 0; i < directories.Length!; i++)
 		{
+			var path = directories[i].FullName;
 			<div>
+				<a asp-controller="Browse" asp-route-path=@path>
 				<div class="list-item" list-item"">
-					<div class="color-item item-type">dir</div>
+					<div class="color-item item-type"><image class="item-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Circle-icons-folder.svg/1200px-Circle-icons-folder.svg.png"></image></div>
 					<div class="color-item item-name">@directories[i].Name</div>
 					<div class="color-item item-size"></div>
 					<div class="color-item item-dt"></div>
 				</div>
+				</a>
 			</div>
 		}
 		for (int i = 0; i < files.Length!; i++)
 		{
 			<div>
 				<div class="list-item">
-					<div class="color-item item-type">file</div>
+					<div class="color-item item-type"><image class="item-img" src="http://www.clker.com/cliparts/V/k/G/v/Z/3/new-file-simple-hi.png"></image></div>
 					<div class="color-item item-name">@files[i].Name</div>
 					<div class="color-item item-size">@ReadableFileSize(files[i].Size)</div>
 					<div class="color-item item-dt">@files[i].DateModified</div>

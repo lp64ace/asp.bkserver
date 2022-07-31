@@ -10,9 +10,9 @@ namespace test2.Controllers
 {
 	public class BrowseController : Controller
 	{
-		public IActionResult Index(string path = "", string search = "*")
+		public IActionResult Index(string path = "D:\\", string search = "*")
 		{
-			string full = "D:\\"; full += path;
+			string full = path;
 
 			DownloadableModel[] DownloadableDirectories = new DownloadableModel[0];
 			DownloadableModel[] DownloadableFiles = new DownloadableModel[0];
@@ -31,7 +31,7 @@ namespace test2.Controllers
 				for (int i = 0; i < directories.Length; i++)
 				{
 					DownloadableDirectories[i] = new DownloadableModel();
-					DownloadableDirectories[i].ContainingFolder = directories[i].Parent.FullName;
+					DownloadableDirectories[i].FullName = directories[i].FullName;
 					DownloadableDirectories[i].Name = directories[i].Name;
 					DownloadableDirectories[i].Size = 0;
 					DownloadableDirectories[i].InternalType = DownloadableModel.InternalTypeEnum.FOLDER;
@@ -40,7 +40,7 @@ namespace test2.Controllers
 				for (int i = 0; i < files.Length; i++)
 				{
 					DownloadableFiles[i] = new DownloadableModel();
-					DownloadableFiles[i].ContainingFolder = files[i].Directory.FullName;
+					DownloadableFiles[i].FullName = files[i].FullName;
 					DownloadableFiles[i].Name = files[i].Name;
 					DownloadableFiles[i].Size = files[i].Length;
 					DownloadableFiles[i].DateModified = files[i].LastWriteTime;

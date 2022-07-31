@@ -7,7 +7,7 @@ namespace test2.Models
 {
 	public class DownloadableModel
 	{
-		public string ContainingFolder { get; set; }
+		public string FullName { get; set; }
 		public string Name { get; set; }
 		public DateTime DateModified { get; set; }
 		public long Size { get; set; }
