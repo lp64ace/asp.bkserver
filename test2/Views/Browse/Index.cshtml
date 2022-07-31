@@ -1,5 +1,98 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+﻿@model DownloadableModel
+@*
+    
 *@
 @{
 }
+
+<style>
+	.list-item {
+		display: flex;
+	}
+
+	.color-header {
+		background-color: antiquewhite
+	}
+
+	.color-item {
+		background-color: aliceblue
+	}
+
+	.item-type {
+		text-align: left;
+		width: 10%;
+		margin: 2px;
+		padding: 2px;
+	}
+
+	.item-name {
+		text-align: left;
+		width: 50%;
+		margin: 2px;
+		padding: 2px;
+	}
+
+	.item-size {
+		text-align: left;
+		width: 10%;
+		margin: 2px;
+		padding: 2px;
+	}
+
+	.item-dt {
+		text-align: left;
+		width: 30%;
+		margin: 2px;
+		padding: 2px;
+	}
+</style>
+
+<div>
+	@{
+		<div>
+			<div class="list-item" list-item"">
+				<div class="color-header item-type">Type</div>
+				<div class="color-header item-name">Name</div>
+				<div class="color-header item-size">Size</div>
+				<div class="color-header item-dt">Date modified</div>
+			</div>
+		</div>
+		static string ReadableFileSize(double size, int unit = 0)
+		{
+			string[] units = { "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+
+			while (size >= 1024)
+			{
+				size /= 1024;
+				++unit;
+			}
+
+			return String.Format("{0:0.#} {1}", size, units[unit]);
+		}
+
+		DownloadableModel[] directories = (DownloadableModel[])ViewData["Directories"];
+		DownloadableModel[] files = (DownloadableModel[])ViewData["Files"];
+		for (int i = 0; i < directories.Length!; i++)
+		{
+			<div>
+				<div class="list-item" list-item"">
+					<div class="color-item item-type">dir</div>
+					<div class="color-item item-name">@directories[i].Name</div>
+					<div class="color-item item-size"></div>
+					<div class="color-item item-dt"></div>
+				</div>
+			</div>
+		}
+		for (int i = 0; i < files.Length!; i++)
+		{
+			<div>
+				<div class="list-item">
+					<div class="color-item item-type">file</div>
+					<div class="color-item item-name">@files[i].Name</div>
+					<div class="color-item item-size">@ReadableFileSize(files[i].Size)</div>
+					<div class="color-item item-dt">@files[i].DateModified</div>
+				</div>
+			</div>
+		}
+	}
+</div>
