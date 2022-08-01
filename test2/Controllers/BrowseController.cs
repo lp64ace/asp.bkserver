@@ -78,8 +78,10 @@ namespace test2.Controllers
 
 		public void PrepareFile(string path)
 		{
+			FileInfo fileinfo = new FileInfo(path);
+
 			// TODO : check if old files in folder wwwroot\media have expired and delete.
-			System.IO.File.Copy(path, @"wwwroot\media");
+			System.IO.File.Copy(path, "wwwroot\\media\\" + fileinfo.Name);
 		}
 	}
 }
