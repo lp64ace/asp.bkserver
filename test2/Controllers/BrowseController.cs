@@ -75,9 +75,10 @@ namespace test2.Controllers
 			return NotFound();
 		}
 
-		public IActionResult GetFile(string path)
+		public void PrepareFile(string path)
 		{
-			return PhysicalFile(path, MimeTypes.GetMimeType(path));
+			// TODO : check if old files in folder wwwroot\media have expired and delete.
+			System.IO.File.Copy(path, @"wwwroot\media");
 		}
 	}
 }
