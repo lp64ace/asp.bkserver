@@ -1,8 +1,7 @@
 ﻿@model DownloadableModel
-@*
-    
-*@
+
 @{
+	ViewData["Title"] = "File Browser";
 }
 
 <style>
@@ -74,7 +73,7 @@
 				++unit;
 			}
 
-			return String.Format("{0:0.#} {1}", size, units[unit]);
+			return String.Format("{0:0.00} {1}", size, units[unit]);
 		}
 
 		DownloadableModel[] directories = (DownloadableModel[])ViewData["Directories"];
@@ -84,24 +83,27 @@
 			var path = directories[i].FullName;
 			<div>
 				<a asp-controller="Browse" asp-route-path=@path>
-				<div class="list-item" list-item"">
-					<div class="color-item item-type"><image class="item-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Circle-icons-folder.svg/1200px-Circle-icons-folder.svg.png"></image></div>
-					<div class="color-item item-name">@directories[i].Name</div>
-					<div class="color-item item-size"></div>
-					<div class="color-item item-dt"></div>
-				</div>
+					<div class="list-item" list-item"">
+						<div class="color-item item-type"><image class="item-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Circle-icons-folder.svg/1200px-Circle-icons-folder.svg.png"></image></div>
+						<div class="color-item item-name">@directories[i].Name</div>
+						<div class="color-item item-size"></div>
+						<div class="color-item item-dt"></div>
+					</div>
 				</a>
 			</div>
 		}
 		for (int i = 0; i < files.Length!; i++)
 		{
+			var path = files[i].FullName;
 			<div>
-				<div class="list-item">
-					<div class="color-item item-type"><image class="item-img" src="http://www.clker.com/cliparts/V/k/G/v/Z/3/new-file-simple-hi.png"></image></div>
-					<div class="color-item item-name">@files[i].Name</div>
-					<div class="color-item item-size">@ReadableFileSize(files[i].Size)</div>
-					<div class="color-item item-dt">@files[i].DateModified</div>
-				</div>
+				<a asp-controller="Browse" asp-action="Preview" asp-route-path=@path>
+					<div class="list-item">
+						<div class="color-item item-type"><image class="item-img" src="http://www.clker.com/cliparts/V/k/G/v/Z/3/new-file-simple-hi.png"></image></div>
+						<div class="color-item item-name">@files[i].Name</div>
+						<div class="color-item item-size">@ReadableFileSize(files[i].Size)</div>
+						<div class="color-item item-dt">@files[i].DateModified</div>
+					</div>
+				</a>
 			</div>
 		}
 	}

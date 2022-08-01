@@ -1,0 +1,28 @@
+﻿@model DownloadableModel
+
+@{
+	ViewData["Title"] = "File Preview";
+}
+
+@{
+	DownloadableModel file = (DownloadableModel)ViewData["File"];
+	string type = (string)ViewData["FileType"];
+	<div>
+		<p>@type : @file.Name</p>
+		@switch(ViewData["FileType"]){
+			case "video/mp4":
+				<dir>
+					...
+				</dir>
+				break;
+			case "text/plain":
+				<dir>
+					...
+				</dir>
+				break;
+			default:
+				<p>Unkown File Type</p>
+				break;
+		}
+	</div>
+}

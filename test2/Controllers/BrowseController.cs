@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using test2.Models;
+using System.Web;
+using System.Net;
 
 namespace test2.Controllers
 {
 	public class BrowseController : Controller
 	{
-		public IActionResult Index(string path = "D:\\", string search = "*")
+		public IActionResult Index(string path = "D:\\shared", string search = "*")
 		{
 			string full = path;
 
@@ -19,7 +21,7 @@ namespace test2.Controllers
 
 			// TODO : Throw error.
 
-			if (Directory.Exists(full))
+			if (full.StartsWith("D:\\shared") && Directory.Exists(full))
 			{
 				DirectoryInfo dir = new DirectoryInfo(full);
 				DirectoryInfo[] directories = dir.GetDirectories(search);
@@ -51,6 +53,31 @@ namespace test2.Controllers
 			ViewData["Directories"] = DownloadableDirectories;
 			ViewData["Files"] = DownloadableFiles;
 			return View();
+		}
+
+		public IActionResult Preview(string path)
+		{
+			if (path.StartsWith("D:\\shared") && System.IO.File.Exists(path))
+			{
+				FileInfo fileinfo = new FileInfo(path);
+				
+				DownloadableModel file = new DownloadableModel();
+				file.FullName = fileinfo.FullName;
+				file.Name = fileinfo.Name;
+				file.Size = fileinfo.Length;
+				file.DateModified = fileinfo.LastWriteTime;
+				file.InternalType = DownloadableModel.InternalTypeEnum.FILE;
+
+				ViewData["File"] = file;
+				ViewData["FileType"] = MimeTypes.GetMimeType(path);
+				return View();
+			}
+			return NotFound();
+		}
+
+		public IActionResult GetFile(string path)
+		{
+			return PhysicalFile(path, MimeTypes.GetMimeType(path));
 		}
 	}
 }
