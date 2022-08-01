@@ -59,6 +59,7 @@ namespace test2.Controllers
 		{
 			if (path.StartsWith("D:\\shared") && System.IO.File.Exists(path))
 			{
+				PrepareFile(path);
 				FileInfo fileinfo = new FileInfo(path);
 				
 				DownloadableModel file = new DownloadableModel();
